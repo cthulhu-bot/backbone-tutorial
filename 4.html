@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Collections</title>
+</head>
+<body>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js" ></script>
+  <script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js" ></script>
+  <script type="text/javascript" src="http://documentcloud.github.com/backbone/backbone-min.js" ></script>
+
+
+
+  <script type="text/javascript">
+
+    var Person = Backbone.Model.extend({
+      initialize: function() {
+        console.log("Person init");
+      },
+      defaults: {
+        name: "undefined",
+        age: "undefined"
+      }
+    });
+
+    // All collections are inherited from underscore so check them out
+    var People = Backbone.Collection.extend({
+      initialize: function() {
+        console.log("People collection init");
+      },
+      model: Person,
+      // Determines how collections gets sorted
+      comparator: function(person1, person2) {
+        person.get("name") > person2.get("name");
+      }
+    });
+
+    var person = new Person({ name:"Joe",age:"30"});
+    var people = new People(person);
+    people.add(person);
+    // or people.add([{name:"josh"},{name:"lani"}]);
+
+    // gives raw access to the models
+    console.log(people.models);
+    // gives you less crap and more literal interpretation of models
+    console.log(people.toJSON());
+
+    // event wired to any people.add() call
+    people.on("add", function(){});
+    
+    // goes on this tangent about ids and cids and every model in the system
+    // needing to have unique guids
+
+    // lots of collection methods:  push, pop, shift, unshift
+    people.sort();
+
+    // returns an array of just the attribute specified from the objects
+    // in the collection
+    people.pluck("name");
+
+    // returns all the people in the collection with the specified attribute
+    people.where({name:"Joe"});
+  </script>
+</body>
+</html>

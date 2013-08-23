@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Routes</title>
+</head>
+<body>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js" ></script>
+  <script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js" ></script>
+  <script type="text/javascript" src="http://documentcloud.github.com/backbone/backbone-min.js" ></script>
+  <script type="text/javascript">
+    var router = Backbone.Router.extend({
+      routes: {
+        // After URL hashtag : function to run
+        // :post means that post is a parameter to the callback function
+        // *post means that everything after the hashtag gets sent as a parameter
+        // :post/:id means you send 2 params - function(post, id)
+        // First pattern matched will get evaluated
+        "foo/:bar": "paramtest",
+        "*action" : "func"
+      },
+      func: function(action) {
+        console.log(action);
+      },
+      paramtest: function(p) {
+        console.log(p);
+      }
+    });
+
+    new router();
+
+    Backbone.history.start();
+
+  </script>
+</body>
+</html>

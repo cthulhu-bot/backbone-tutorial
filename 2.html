@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style type="text/css">
+    #list-template { display:none; }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <button>Load</button>
+    <ul id="List" />
+  </div>
+
+  <div id="list-template">
+    <li><a href="" /></li>
+  </div>
+
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js" ></script>
+  <script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js" ></script>
+  <script type="text/javascript" src="http://documentcloud.github.com/backbone/backbone-min.js" ></script>
+  <script type="text/javascript">
+    model = new Backbone.Model({
+      data:[
+        { text: "Google", href: "http://google.com" },
+        { text: "Facebook", href: "http://facebook.com" },
+        { text: "Twitter", href: "http://twitter.com" }
+      ]
+    });
+
+    var View = Backbone.View.extend({
+      initialize: function () {
+        this.template = $("#list-template").children();
+      },
+      el: "#container",
+      // contextual, this event is now bound to the container obj
+      events: {
+        "click": "render"
+      },
+      render: function() {
+        var data = this.model.get("data");
+
+        for (var i=0, l=data.length; i<l; i++) {
+          var li = this.template.clone().find("a").attr("href", data[i].href).text(data[i].text).end();
+          this.$el.find("ul").append(li);
+        }
+      }
+    });
+
+    var view = new View({ model: model });
+
+  </script>
+
+</body>
+</html>
